@@ -1,0 +1,53 @@
+---
+title: "Assignment 7"
+output: html_document
+date: "2023-03-06"
+---
+
+Installing Required packages
+
+```{r}
+r = getOption("repos")
+r["CRAN"] = "http://cran.us.r-project.org"
+options(repos = r)
+```
+
+```{r}
+ 
+
+ 
+install.packages("pryr")
+require(pryr)
+require(ISLR)
+require(boot)
+install.packages("plyr")
+library(data.table)
+library(plyr)
+```
+
+Load students data from the table in given dataset
+
+```{r}
+students<- read.table("assignment7_data.txt", header = TRUE,sep=",")
+print(students)
+```
+
+Using ddply to calculate mean of the grades for different genders
+
+```{r}
+StudentAverage = ddply(students,"Sex",transform,Grade.Average=mean(Grade))
+print(StudentAverage)
+```
+
+using grepl as a filter created a new subset, which contains students with letter i in their name
+
+```{r}
+i_students <- subset(students, grepl("i", students$Name, ignore.case=T))
+print(i_students)
+```
+
+Used write.table function to write the new subset as csv file.
+
+```{r}
+write.table(i_students,"DataSubset",sep=",") 
+```
